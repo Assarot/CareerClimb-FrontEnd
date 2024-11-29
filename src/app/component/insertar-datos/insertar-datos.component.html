@@ -1,0 +1,82 @@
+<div class="container">
+  <h2 class="title">📂 Cargar datos por Excel</h2>
+
+  <div *ngIf="isUploading" class="loading-overlay">
+    <div class="loading-message">
+      <i class="pi pi-spinner pi-spin"></i>
+      <p>Cargando datos...</p>
+    </div>
+  </div>
+
+  <p-fileUpload
+    name="file"
+    [customUpload]="true"
+    [accept]="'.xlsx,.xls'"
+    [auto]="false"
+    (onSelect)="onFileSelected($event)"
+    (onClear)="onClearFiles()"
+  >
+    <ng-template
+      pTemplate="header"
+      let-chooseCallback="chooseCallback"
+      let-clearCallback="clearCallback"
+    >
+      <div>
+        <p>
+          Seleccione un documento o arrastre y suelte el documento en la parte
+          de abajo
+        </p>
+      </div>
+      <div class="file-upload-header">
+        <button
+          pButton
+          type="button"
+          label="Buscar Documento"
+          icon="pi pi-plus"
+          class="upload-button"
+          (click)="chooseCallback()"
+        ></button>
+        <button
+          pButton
+          type="button"
+          label="Cancelar"
+          icon="pi pi-times"
+          class="upload-button"
+          (click)="clearCallback()"
+        ></button>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="empty">
+      <div class="empty-dropzone">
+        <i class="pi pi-cloud-upload text-4xl"></i>
+        <p>Arrastra y suelta tu archivo aquí</p>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="content" let-files>
+      <div *ngFor="let file of files" class="file-item">
+        <i class="pi pi-file-excel file-icon"></i>
+        <span class="file-name">{{ file.name }}</span>
+        <span class="file-size">{{ formatSize(file.size) }}</span>
+      </div>
+    </ng-template>
+  </p-fileUpload>
+
+  <button
+    pButton
+    type="button"
+    label="Subir Archivo"
+    icon="pi pi-upload"
+    [disabled]="!selectedFile"
+    class="upload-button"
+    (click)="startUpload()"
+  ></button>
+
+  <div *ngIf="uploadSuccess" class="success-message">
+    <p>✔ Archivo subido exitosamente.</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <p>✖ {{ errorMessage }}</p>
+  </div>
+</div>

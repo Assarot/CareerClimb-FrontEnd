@@ -1,0 +1,123 @@
+<div
+  class="flex justify-content-center align-items-center flex-column"
+  style="margin: 20px"
+>
+  <!-- Botón para Crear -->
+  <button
+    pButton
+    pRipple
+    type="button"
+    icon="pi pi-plus"
+    class="p-button-rounded"
+    (click)="showDialogCreate()"
+  ></button>
+
+  <!-- Tabla de Datos -->
+  <p-table
+    [value]="rubros"
+    [tableStyle]="{ 'min-width': '10rem' }"
+    responsiveLayout="scroll"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Ponderado</th>
+        <th>Activo</th>
+        <th>Opciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rubro>
+      <tr>
+        <td>{{ rubro.idRubro }}</td>
+        <td>{{ rubro.nombre }}</td>
+        <td>{{ rubro.descripcion }}</td>
+        <td>{{ rubro.ponderado }}</td>
+        <td>{{ rubro.isActive === "A" ? "Sí" : "No" }}</td>
+        <td>
+          <!-- Botón Editar -->
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-pencil"
+            class="p-button-rounded"
+            (click)="showDialogEdit(rubro.idRubro)"
+          ></button>
+          <!-- Botón Eliminar -->
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger"
+            (click)="deleteRubro(rubro.idRubro)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<!-- Diálogo para Crear/Editar -->
+<p-dialog
+  header="{{ isEditing ? 'Editar Rubro' : 'Crear Rubro' }}"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '25rem', backgroundColor: '#ffe4e1' }"
+  headerStyle="color: #ff69b4"
+>
+  <div class="flex align-items-center gap-3 mb-3">
+    <label for="nombre" class="font-semibold w-6rem">Nombre:</label>
+    <input
+      pInputText
+      [(ngModel)]="rubro.nombre"
+      name="nombre"
+      id="nombre"
+      class="flex-auto"
+      autocomplete="off"
+    />
+  </div>
+  <div class="flex align-items-center gap-3 mb-3">
+    <label for="descripcion" class="font-semibold w-6rem">Descripción:</label>
+    <input
+      pInputText
+      [(ngModel)]="rubro.descripcion"
+      name="descripcion"
+      id="descripcion"
+      class="flex-auto"
+      autocomplete="off"
+    />
+  </div>
+  <div class="flex align-items-center gap-3 mb-3">
+    <label for="ponderado" class="font-semibold w-6rem">Ponderado:</label>
+    <input
+      pInputText
+      [(ngModel)]="rubro.ponderado"
+      name="ponderado"
+      id="ponderado"
+      class="flex-auto"
+      type="number"
+    />
+  </div>
+  <div class="flex align-items-center gap-3 mb-3">
+    <label for="activo" class="font-semibold w-6rem">Activo:</label>
+    <input
+      type="checkbox"
+      id="activo"
+      [(ngModel)]="rubro.isActive"
+      (ngModelChange)="rubro.isActive = $event ? 'A' : 'D'"
+    />
+  </div>
+  <div class="flex justify-content-end gap-2">
+    <p-button label="Cancelar" severity="secondary" (click)="visible = false" />
+    <p-button
+      label="{{ isEditing ? 'Actualizar' : 'Guardar' }}"
+      (click)="guardarRubro()"
+    />
+  </div>
+</p-dialog>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

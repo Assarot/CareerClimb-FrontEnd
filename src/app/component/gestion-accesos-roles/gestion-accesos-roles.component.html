@@ -1,0 +1,25 @@
+<div class="tabs-container">
+  <div
+    class="tab"
+    *ngFor="let tab of tabs"
+    [class.active]="selectedTab === tab"
+    (click)="cambiarTab(tab)"
+  >
+    {{ tab }}
+    <div class="tab-indicator" *ngIf="selectedTab === tab"></div>
+  </div>
+</div>
+
+<div class="tab-content">
+  <div [@slideAnimation]="slideDirection">
+    <ng-container *ngIf="selectedTab === 'Accesos'">
+      <app-acceso></app-acceso>
+    </ng-container>
+    <ng-container *ngIf="selectedTab === 'Roles'">
+      <app-rol></app-rol>
+    </ng-container>
+    <ng-container *ngIf="selectedTab === 'AccesoRol'">
+      <app-acceso-rol></app-acceso-rol>
+    </ng-container>
+  </div>
+</div>

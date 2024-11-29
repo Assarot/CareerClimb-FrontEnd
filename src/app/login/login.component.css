@@ -1,0 +1,171 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-image: url('/assets/loginn.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative; 
+}
+
+:host::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(44, 44, 44, 0.8);
+    z-index: 1; 
+}
+
+.form {
+    display: block;
+    padding: 0.75rem;
+    max-width: 390px; 
+    border-radius: 0.4rem;
+    position: relative;
+    z-index: 2; 
+}
+
+.form-title {
+    font-size: 1rem; 
+    line-height: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    color: #ffffff;
+}
+
+.input-container {
+    position: relative;
+}
+
+.input-container input,
+.form button {
+    outline: none;
+    border: none;
+    margin: 6px 0;
+}
+
+.input-container input {
+    background-color: rgba(99, 99, 99, 0.3); 
+    color: #ffffff; 
+    padding: 0.75rem; 
+    font-size: 0.75rem; 
+    line-height: 1rem;
+    width: 100%;
+    border-radius: 0.4rem;
+    text-align: center; 
+    padding-left: 0; 
+    padding-right: 0; 
+}
+
+.input-container input::placeholder {
+    color: rgba(255, 255, 255, 0.7); 
+    text-align: center; 
+}
+
+.input-container .toggle-password-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+
+.input-container .toggle-password-icon:hover {
+    color: #ffffff;
+}
+
+.submit {
+    display: block;
+    padding: 0.5rem; 
+    background-color: #FFBC2B;
+    color: #000000;
+    font-size: 0.75rem; 
+    font-weight: 500;
+    width: 100%;
+    border-radius: 0.4rem;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.submit:hover {
+    background-color: #f3dfb9;
+    transition: 0.5s;
+}
+
+.signup-link {
+    color: #ffffff;
+    font-size: 0.75rem; 
+    text-align: center;
+}
+
+.signup-link a {
+    text-decoration: underline;
+    color: #7077FF;
+}
+
+.container {
+    z-index: 2; 
+}
+
+.img {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    width: 40%;
+    margin-bottom: 15px;
+    align-items: center; 
+}
+
+.error-message {
+    color: red;
+    font-size: 0.75em; 
+    margin-top: 5px;
+    text-align: center;
+}
+
+.loading-screen {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.7); 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    color: white;
+    font-size: 1.2em; 
+    z-index: 1000; 
+    flex-direction: column;
+    text-align: center;
+}
+
+.spinner {
+    margin-top: 15px; 
+    width: 40px; 
+    height: 40px; 
+    border: 4px solid rgba(255, 255, 255, 0.2); 
+    border-top-color: white; 
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

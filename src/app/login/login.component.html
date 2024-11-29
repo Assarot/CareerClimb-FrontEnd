@@ -1,0 +1,52 @@
+<div class="container" *ngIf="!isLoading; else loadingTemplate">
+  <div class="img">
+    <img src="assets/LogoUpeu.png" alt="Logo" />
+    <img src="assets/careerclimb.png" alt="career" />
+  </div>
+  <form class="form" (ngSubmit)="onSubmit()">
+    <p class="form-title">Por favor, identifíquese</p>
+    <div class="input-container">
+      <input
+        type="text"
+        placeholder="Usuario"
+        [(ngModel)]="loginDto.username"
+        name="username"
+        required
+      />
+    </div>
+    <div class="input-container password-container">
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        placeholder="Contraseña"
+        [(ngModel)]="loginDto.password"
+        name="password"
+        required
+      />
+      <i
+        class="toggle-password-icon"
+        [ngClass]="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"
+        (click)="togglePasswordVisibility()"
+      ></i>
+    </div>
+
+    <!-- Mensaje de error -->
+    <p *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </p>
+
+    <button type="submit" class="submit">Iniciar Sesión</button>
+
+    <p class="signup-link">
+      ¿No estás registrado?
+      <a href="asd">Contáctanos</a>
+    </p>
+  </form>
+</div>
+
+<!-- Plantilla de carga -->
+<ng-template #loadingTemplate>
+  <div class="loading-screen">
+    <p>Espere, procesando su solicitud...</p>
+    <div class="spinner"></div>
+  </div>
+</ng-template>

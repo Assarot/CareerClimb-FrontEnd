@@ -1,0 +1,34 @@
+    <app-navbar></app-navbar>
+    <app-solicitud></app-solicitud>
+
+    <div class="txtWelcome" *ngIf="ppps && ppps.length === 0">
+        <h1>Bienvenido, aún no tienes <br>ninguna práctica en curso </h1>
+    </div>
+
+    <div class="card" *ngFor="let ppp of ppps; let i = index">
+        <div class="card-image">
+            <img src="assets/practica.png" alt="Imagen de Práctica">
+        </div>
+        <div class="card-content">
+            <div class="card-header">
+                <span class="card-number">1</span>
+                <h2>Practica - {{ppp.periodo}}</h2>
+            </div>
+            <div class="card-subheader">
+                <span class="empresa">Empresa: asdasdasd</span>
+            </div>
+            <p class="card-line">
+                Línea: ########<br />
+                ########
+            </p>
+            <div class="card-footer">
+                <div class="date">04/05/2024 - 04/06/2024</div>
+                <button class="icon-button" [routerLink]="'/layout/inicio'">
+                    <i class="pi pi-tablet"></i> 
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    

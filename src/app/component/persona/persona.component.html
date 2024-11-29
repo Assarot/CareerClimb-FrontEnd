@@ -1,0 +1,143 @@
+<div
+  class="flex justify-content-center align-items-center flex-column"
+  style="margin: 20px"
+>
+  <button
+    pButton
+    pRipple
+    type="button"
+    icon="pi pi-plus"
+    class="p-button-rounded"
+    (click)="showDialogCreate()"
+  ></button>
+
+  <p-table
+    [value]="personas"
+    [paginator]="true"
+    [rows]="pageSize"
+    [totalRecords]="totalRecords"
+    [responsiveLayout]="'scroll'"
+    [tableStyle]="{ 'min-width': '10rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>#</th>
+        <th>Nombre Completo</th>
+        <th>DNI</th>
+        <th>Teléfono</th>
+        <th>Activo</th>
+        <th>Opciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-persona>
+      <tr>
+        <td>{{ persona.idPersona }}</td>
+        <td>{{ persona.nombres }} {{ persona.apellidos }}</td>
+        <td>{{ persona.dni }}</td>
+        <td>{{ persona.telefono }}</td>
+        <td>{{ persona.isActive === "A" ? "Sí" : "No" }}</td>
+        <td>
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-pencil"
+            class="p-button-rounded"
+            (click)="showDialogEdit(persona.idPersona)"
+          ></button>
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger"
+            (click)="deletePersona(persona.idPersona)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog
+  header="{{ isEditing ? 'Editar Persona' : 'Crear Persona' }}"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '25rem', backgroundColor: '#ffe4e1' }"
+  headerStyle="color: #ff69b4"
+>
+  <div class="flex flex-column gap-3">
+    <div class="flex align-items-center gap-2 mb-3">
+      <label for="nombres" class="font-semibold w-5rem">Nombres:</label>
+      <input
+        pInputText
+        [(ngModel)]="persona.nombres"
+        name="nombres"
+        id="nombres"
+        class="flex-auto"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="flex align-items-center gap-2 mb-3">
+      <label for="apellidos" class="font-semibold w-5rem">Apellidos:</label>
+      <input
+        pInputText
+        [(ngModel)]="persona.apellidos"
+        name="apellidos"
+        id="apellidos"
+        class="flex-auto"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="flex align-items-center gap-2 mb-3">
+      <label for="dni" class="font-semibold w-5rem">DNI:</label>
+      <input
+        pInputText
+        [(ngModel)]="persona.dni"
+        name="dni"
+        id="dni"
+        class="flex-auto"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="flex align-items-center gap-2 mb-3">
+      <label for="telefono" class="font-semibold w-5rem">Teléfono:</label>
+      <input
+        pInputText
+        [(ngModel)]="persona.telefono"
+        name="telefono"
+        id="telefono"
+        class="flex-auto"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="flex align-items-center gap-2 mb-3">
+      <label for="activo" class="font-semibold w-5rem">Activo:</label>
+      <input
+        type="checkbox"
+        id="activo"
+        [(ngModel)]="persona.isActive"
+        (ngModelChange)="persona.isActive = $event ? 'A' : 'D'"
+      />
+    </div>
+
+    <div class="flex justify-content-end gap-2">
+      <p-button
+        label="Cancelar"
+        severity="secondary"
+        (click)="visible = false"
+      />
+      <p-button
+        label="{{ isEditing ? 'Actualizar' : 'Guardar' }}"
+        (click)="guardarPersona()"
+      />
+    </div>
+  </div>
+</p-dialog>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

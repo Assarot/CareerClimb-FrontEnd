@@ -1,0 +1,34 @@
+:host {
+    grid-area: footer;
+}
+
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #001f54;
+    color: #ffffff;
+    height: 50px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    transition: margin-left 0.3s ease, padding 0.3s ease;
+}
+
+.sidebar.collapsed ~ .footer {
+    margin-left: 60px;
+}
+
+.sidebar:not(.collapsed) ~ .footer {
+    margin-left: var(--sidebar-width);
+}
+
+
+.footer a {
+    color: #a3b1c2; 
+    text-decoration: none; 
+}
+
+.footer a:hover {
+    color: #ffffff; 
+}

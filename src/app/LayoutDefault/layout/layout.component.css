@@ -1,0 +1,31 @@
+:host {
+    display: grid;
+    grid-template-areas:
+      "navbar navbar"
+      "sidebar content"
+      "sidebar footer";
+    grid-template-columns: var(--sidebar-width, 200px) 1fr;
+    grid-template-rows: auto 1fr auto; 
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+  
+  .content {
+    grid-area: content;
+    overflow-y: auto;
+    min-height: 0;
+    padding: 20px; 
+  }
+  
+  
+  .sidebar.collapsed ~ .footer {
+    margin-left: 60px; 
+  }
+  
+  .sidebar:not(.collapsed) ~ .footer {
+    margin-left: var(--sidebar-width); 
+  }
+  

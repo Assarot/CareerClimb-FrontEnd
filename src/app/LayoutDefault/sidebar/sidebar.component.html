@@ -1,0 +1,67 @@
+    <div class="sidebar" [class.collapsed]="isCollapsed">
+    <!-- Botón para colapsar/expandir -->
+    <button class="toggle-btn" (click)="toggleSidebar()">
+        <i class="pi" [ngClass]="{ 'pi-chevron-left': !isCollapsed, 'pi-chevron-right': isCollapsed }"></i>
+    </button>
+
+<!-- Menú principal -->
+    <ul class="menu">
+        <!-- Accesos principales -->
+        <li *ngFor="let acceso of accesos">
+            <div class="acceso-header" (click)="toggleSubAccesos(acceso)">
+                <a [routerLink]="acceso.url" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <i class="pi icon" [ngClass]="acceso.icono"></i>
+                    <span *ngIf="!isCollapsed">{{ acceso.titulo }}</span>
+                </a>
+                <i 
+                    *ngIf="acceso.subAccesos && acceso.subAccesos.length > 0" 
+                    class="pi"
+                    [ngClass]="{
+                        'pi-chevron-down': acceso.isExpanded,
+                        'pi-chevron-right': !acceso.isExpanded
+                    }">
+                </i>
+            </div>
+
+            <!-- Submenú para los subaccesos -->
+            <ul *ngIf="acceso.isExpanded && acceso.subAccesos && acceso.subAccesos.length > 0" class="submenu">
+                <li *ngFor="let subAcceso of acceso.subAccesos">
+                    <a [routerLink]="subAcceso.url" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                        <i class="pi icon" [ngClass]="subAcceso.icono"></i>
+                        <span *ngIf="!isCollapsed">{{ subAcceso.titulo }}</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <hr class="divider">
+
+<!-- Menú adicional -->
+<ul class="menu">
+        <li>
+            <a [routerLink]="'/layout/notificaciones'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="pi pi-bell icon"></i>
+                <span *ngIf="!isCollapsed">Notificaciones</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="'/layout/configuracion'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="pi pi-cog icon"></i>
+                <span *ngIf="!isCollapsed">Configuración</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="'/layout/support'" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="pi pi-info-circle icon"></i>
+                <span *ngIf="!isCollapsed">Soporte</span>
+            </a>
+        </li>
+        <li>
+            <a (click)="logout()">
+                <i class="pi pi-sign-out icon"></i>
+                <span *ngIf="!isCollapsed">Cerrar Sesión</span>
+            </a>
+        </li>
+    </ul>
+</div>

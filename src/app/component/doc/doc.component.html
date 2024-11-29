@@ -1,0 +1,147 @@
+<div class="main-container">
+  <!-- Columna de la Tabla de Archivos -->
+  <div class="table-container">
+    <p-table [value]="docs" [tableStyle]="{ 'min-width': '100%' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-doc let-i="rowIndex" let-detalledoc>
+        <tr>
+          <td>{{ i + 1 }}</td>
+          <!-- Índice autoincrementable -->
+          <td>{{ doc.nombre }}</td>
+          <!-- Nombre del documento -->
+          <td>{{ doc.fechaSubida }}</td>
+          <!-- Fecha de subida -->
+          <td>{{ doc.estado }}</td>
+          <!-- Estado del documento -->
+          <td class="actions-column">
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-eye"
+              class="p-button-rounded p-button-info"
+              (click)="visualizarDocEnModal(doc.id)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-download"
+              class="p-button-rounded"
+              (click)="downloadDoc(doc.id, doc.nombre)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              type="button"
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-danger"
+              (click)="confirmDeleteDoc(doc.id)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- Columna para Subir Archivos -->
+  <div class="upload-container">
+    <h3>Subir Documento</h3>
+
+    <div class="task-modal">
+      <div class="task-header">
+        <i class="pi pi-upload icon"></i>
+        <span class="task-status">Registra tu documento</span>
+        <i class="pi pi-upload icon"></i>
+      </div>
+      <span class="files-uploaded">Archivos subidos: {{ docsSubidos }}</span>
+
+      <!-- Información del Archivo Seleccionado -->
+      <div *ngIf="selectedFile" class="file-info">
+        <img
+          [src]="getFileIcon(selectedFile.type)"
+          alt="File Icon"
+          class="file-icon"
+        />
+        <div class="file-details">
+          <span class="file-name">{{ selectedFile.name }}</span>
+          <span class="file-type">{{ selectedFile.type }}</span>
+        </div>
+
+        <div *ngIf="isUploading" class="progress-bar">
+          <div class="progress" [style.width.%]="progress"></div>
+        </div>
+
+        <div class="file-actions">
+          <button
+            pButton
+            icon="pi pi-eye"
+            class="action-button"
+            (click)="visualizarDocEnModal(0)"
+          ></button>
+          <button
+            pButton
+            icon="pi pi-download"
+            class="action-button"
+            (click)="downloadDoc(0, selectedFile.name)"
+          ></button>
+          <button
+            pButton
+            icon="pi pi-times"
+            class="action-button"
+            (click)="removeSelectedFile()"
+          ></button>
+        </div>
+      </div>
+
+      <!-- Botón para Subir Archivo -->
+      <label class="file-upload" [class.disabled]="isUploading">
+        <i class="pi pi-paperclip"></i> Adjuntar
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          class="file-input"
+          [disabled]="isUploading"
+          #fileInput
+        />
+      </label>
+
+      <button
+        class="submit-button"
+        (click)="confirmSaveDoc()"
+        [disabled]="isUploading || !nombreDetalle || !selectedFile"
+      >
+        ENTREGAR MI TRABAJO
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Vista Previa -->
+<p-dialog
+  header="Vista Previa del Documento"
+  [(visible)]="modalVisible"
+  [style]="{ width: '80vw', height: '80vh' }"
+  [modal]="true"
+  [closable]="true"
+  (onHide)="cerrarModal()"
+>
+  <iframe
+    *ngIf="archivoUrl"
+    [src]="archivoUrl | safe"
+    width="100%"
+    height="100%"
+  ></iframe>
+</p-dialog>
+
+<!-- Mensajes y Confirmaciones -->
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

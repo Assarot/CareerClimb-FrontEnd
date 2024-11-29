@@ -1,0 +1,26 @@
+<div class="navbar">
+    <div class="logo_linea">
+        <ul>
+            <li>
+                <a [routerLink]="'/dashboard'"><img src="assets/careerclimb.png" alt="Logo" class="logo">
+                </a>
+            </li>
+        </ul>
+
+        <div class="divider">
+        </div>
+    </div>    
+    
+
+        <div class="profile-section" [routerLink]="'/layout'">
+            <img src="assets/userDefault.png" alt="Avatar" class="avatar">
+            <div class="profile-info">
+                <span class="name">{{ fullName}}</span>
+                <span class="role" *ngIf="isStudent">Estudiante</span>
+                <span class="role" *ngIf="isCoordinatorPPP">Coordinador PPP</span>
+                <span class="role" *ngIf="isSupervisor">Supervisor</span>
+                <span class="role" *ngIf="isSecretary">Secretaria</span>
+                <span class="role" *ngIf="isAdmin">Administrador</span>
+            </div>
+        </div>
+</div>

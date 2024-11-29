@@ -1,0 +1,152 @@
+<div
+  class="flex justify-content-center align-items-center flex-column"
+  style="margin: 20px"
+>
+  <!-- Botón para Crear -->
+  <button
+    pButton
+    pRipple
+    type="button"
+    icon="pi pi-plus"
+    class="p-button-rounded"
+    (click)="showDialogCreate()"
+  ></button>
+
+  <!-- Tabla de Datos -->
+  <p-table
+    [value]="usuarioRoles"
+    [paginator]="true"
+    [rows]="pageSize"
+    [totalRecords]="totalRecords"
+    [responsiveLayout]="'scroll'"
+    [tableStyle]="{ 'min-width': '10rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Id Usuario Rol</th>
+        <th>Username</th>
+        <th>Nombre Persona</th>
+        <th>DNI Persona</th>
+        <th>Rol Asignado</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-usuarioRol>
+      <tr>
+        <td>{{ usuarioRol.idUsuarioRol }}</td>
+        <td>{{ usuarioRol.usuario.username }}</td>
+        <td>
+          {{ usuarioRol.usuario.persona.nombres }}
+          {{ usuarioRol.usuario.persona.apellidos }}
+        </td>
+        <td>{{ usuarioRol.usuario.persona.dni }}</td>
+        <td>{{ usuarioRol.rol.nombre }}</td>
+        <td>
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-pencil"
+            class="p-button-rounded"
+            (click)="showDialogEdit(usuarioRol.id)"
+          ></button>
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger"
+            (click)="deleteUsuarioRol(usuarioRol.id)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<!-- Diálogo para Crear/Editar -->
+<p-dialog
+  header="{{ isEditing ? 'Editar Usuario Rol' : 'Crear Usuario Rol' }}"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '35rem',height:'30rem', backgroundColor: '#ffe4e1' }"
+  headerStyle="color: #ff69b4"
+>
+  <!-- Formulario de Crear/Editar Usuario Rol -->
+  <div class="flex flex-column gap-3">
+    <!-- Campo para Email del Usuario -->
+    <div class="p-field">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        pInputText
+        [(ngModel)]="registers.email"
+        name="email"
+      />
+    </div>
+
+    <!-- Campo para Contraseña del Usuario -->
+    <div class="p-field">
+      <label for="password">Contraseña</label>
+      <input
+        id="password"
+        type="text"
+        pInputText
+        [(ngModel)]="registers.password"
+        name="password"
+      />
+    </div>
+
+    <!-- Campo para Selección de Rol -->
+    <div class="p-field">
+      <label for="roleName">Seleccionar Rol</label>
+      <p-dropdown
+        id="roleName"
+        [(ngModel)]="registers.roleName"
+        [options]="roles"   
+        optionLabel="nombre"  
+        optionValue="nombre"  
+        placeholder="Selecciona un rol"
+        name="roleName"
+      ></p-dropdown>
+    </div>
+
+
+    <!-- Campo para Selección de ID Persona -->
+    <div class="p-field">
+      <label for="idPersona">Seleccionar Persona</label>
+      <p-dropdown
+        id="idPersona"
+        [(ngModel)]="registers.idPersona"
+        [options]="filteredPersonas"  
+        optionLabel="fullName" 
+        optionValue="idPersona" 
+        placeholder="Selecciona una persona"
+        name="idPersona"
+        filter="true"
+        [filterBy]="'fullName'" 
+      ></p-dropdown>
+    </div>
+    
+
+
+    <!-- Botones de Acción -->
+    <div class="flex justify-content-end gap-2">
+      <p-button
+        label="Cancelar"
+        severity="secondary"
+        (click)="visible = false"
+      ></p-button>
+      <p-button
+        label="{{ isEditing ? 'Actualizar' : 'Guardar' }}"
+        (click)="guardarUsuarioRol()"
+      ></p-button>
+    </div>
+  </div>
+</p-dialog>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+
